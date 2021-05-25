@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 
 class FirstFragment : Fragment() {
@@ -43,7 +44,18 @@ class FirstFragment : Fragment() {
 
         generateButton?.setOnClickListener {
             // TODO: send min and max to the SecondFragment
-            listener?.generate(minEditText?.text.toString().toInt(),maxEditText?.text.toString().toInt())
+            
+            if(minEditText?.text?.isNotEmpty()==true && maxEditText?.text?.isNotEmpty()==true){
+                var min = minEditText?.text.toString().toInt()
+                var max = maxEditText?.text.toString().toInt()
+                if(max>min){
+                    listener?.generate(min,max)
+                } else {
+                    Toast.makeText(activity?.applicationContext, "MAX should be bigger then MIN", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(activity?.applicationContext, "EditText is empty", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

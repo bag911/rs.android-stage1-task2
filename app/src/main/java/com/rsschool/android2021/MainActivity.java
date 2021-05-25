@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.Gen
         // TODO: implement it
         final Fragment secondFragment = SecondFragment.newInstance(min,max);
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, secondFragment).addToBackStack("1");
+        transaction.replace(R.id.container, secondFragment,"1");
         transaction.commit();
     }
 
@@ -46,5 +46,16 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.Gen
     @Override
     public void backToFirstFragment(int previousNumber) {
         openNewFirstFragment(previousNumber);
+    }
+
+    @Override
+    public void onBackPressed() {
+        SecondFragment secFragment = (SecondFragment) getSupportFragmentManager().findFragmentByTag("1");
+        if(secFragment.isVisible()){
+            openFirstFragment(secFragment.getPreviousNumber());
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 }

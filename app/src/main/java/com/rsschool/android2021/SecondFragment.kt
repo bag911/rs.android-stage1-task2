@@ -14,7 +14,7 @@ class SecondFragment : Fragment() {
     private var backButton: Button? = null
     private var result: TextView? = null
     private var listener: BackToFirst? = null
-
+    var previousNumber: Int = 0
     override fun onAttach(context: Context) {
         super.onAttach(context)
         listener = context as BackToFirst
@@ -35,11 +35,11 @@ class SecondFragment : Fragment() {
 
         val min = arguments?.getInt(MIN_VALUE_KEY) ?: 0
         val max = arguments?.getInt(MAX_VALUE_KEY) ?: 0
-
-        result?.text = generate(min, max).toString()
+        previousNumber = generate(min, max)
+        result?.text = previousNumber.toString()
 
         backButton?.setOnClickListener {
-            listener?.backToFirstFragment(result?.text.toString().toInt())
+            listener?.backToFirstFragment(previousNumber)
         }
     }
 
@@ -61,6 +61,7 @@ class SecondFragment : Fragment() {
             return fragment
         }
 
+
         private const val MIN_VALUE_KEY = "MIN_VALUE"
         private const val MAX_VALUE_KEY = "MAX_VALUE"
     }
@@ -68,4 +69,6 @@ class SecondFragment : Fragment() {
     interface BackToFirst {
         fun backToFirstFragment(previousNumber: Int)
     }
+
+
 }

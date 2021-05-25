@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import java.lang.Exception
 
 class FirstFragment : Fragment() {
 
@@ -43,16 +44,22 @@ class FirstFragment : Fragment() {
 
 
         generateButton?.setOnClickListener {
-            // TODO: send min and max to the SecondFragment
             
             if(minEditText?.text?.isNotEmpty()==true && maxEditText?.text?.isNotEmpty()==true){
-                var min = minEditText?.text.toString().toInt()
-                var max = maxEditText?.text.toString().toInt()
-                if(max>min){
-                    listener?.generate(min,max)
-                } else {
-                    Toast.makeText(activity?.applicationContext, "MAX should be bigger then MIN", Toast.LENGTH_SHORT).show()
-                }
+               try {
+                   val min = minEditText?.text.toString().toInt()
+                   val max = maxEditText?.text.toString().toInt()
+                   if(max>min){
+                       if(max<=Int.MAX_VALUE && min<=Int.MAX_VALUE){
+                           listener?.generate(min,max)
+                       }
+                   } else {
+                       Toast.makeText(activity?.applicationContext, "MAX should be bigger then MIN", Toast.LENGTH_SHORT).show()
+                   }
+               }
+               catch (e:Exception){
+                   Toast.makeText(activity?.applicationContext, "Integer overflow", Toast.LENGTH_SHORT).show()
+               }
             } else {
                 Toast.makeText(activity?.applicationContext, "EditText is empty", Toast.LENGTH_SHORT).show()
             }

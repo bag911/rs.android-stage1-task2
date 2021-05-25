@@ -24,19 +24,12 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.Gen
     }
 
     private void openSecondFragment(int min, int max) {
-        // TODO: implement it
         final Fragment secondFragment = SecondFragment.newInstance(min,max);
         final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, secondFragment,"1");
         transaction.commit();
     }
 
-    private void openNewFirstFragment(int previousNumber) {
-        final Fragment firstFragment = FirstFragment.newInstance(previousNumber);
-        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, firstFragment).addToBackStack("1");
-        transaction.commit();
-    }
 
     @Override
     public void generate(int min, int max) {
@@ -45,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.Gen
 
     @Override
     public void backToFirstFragment(int previousNumber) {
-        openNewFirstFragment(previousNumber);
+        openFirstFragment(previousNumber);
     }
 
     @Override
